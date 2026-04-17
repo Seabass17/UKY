@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>United Kingdom of Yorkshire — Reference Hub</title>
+<style>
+  :root {
+    --green: #1a3a1a;
+    --gold: #c9a84c;
+    --gold-light: #e8d08a;
+    --bg: #0e1a0e;
+    --card-bg: #142014;
+    --border: rgba(201,168,76,0.2);
+    --text: #d4c89a;
+    --text-muted: #7a6a4a;
+    --text-dim: #4a3a2a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* Header */
+  .hero {
+    background: var(--green);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(201,168,76,0.03) 40px,
+      rgba(201,168,76,0.03) 41px
+    );
+  }
+  .flag-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .flag {
+    width: 64px;
+    height: 40px;
+    background: #1a4a1a;
+    border: 1px solid var(--border);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .flag::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 6px;
+    background: #0a0a0a;
+    transform: translateY(-50%);
+  }
+  .flag::after {
+    content: '';
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 6px;
+    background: #0a0a0a;
+    transform: translateX(-50%);
+  }
+  .hero-title {
+    font-size: 28px;
+    font-weight: normal;
+    color: var(--gold);
+    letter-spacing: 3px;
+    margin-bottom: 6px;
+    position: relative;
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+    position: relative;
+  }
+  .hero-motto {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+    letter-spacing: 1px;
+    position: relative;
+  }
+
+  /* Main content */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 20px 48px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    text-decoration: none;
+    display: block;
+    transition: border-color .15s, background .15s;
+  }
+  .card:hover {
+    border-color: var(--gold);
+    background: #1c2c1c;
+  }
+  .card-icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .card-title {
+    font-size: 14px;
+    color: var(--gold);
+    margin-bottom: 4px;
+    letter-spacing: .5px;
+  }
+  .card-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-family: system-ui, sans-serif;
+  }
+  .card-tag {
+    display: inline-block;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 0.5px solid var(--border);
+    color: var(--text-dim);
+    margin-top: 8px;
+    font-family: system-ui, sans-serif;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+
+  /* Quick facts */
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+  .fact {
+    background: var(--card-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+  .fact-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 3px;
+    font-family: system-ui, sans-serif;
+  }
+  .fact-value {
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    border-top: 0.5px solid var(--border);
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: system-ui, sans-serif;
+    letter-spacing: .5px;
+  }
+
+  .divider {
+    height: 0.5px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="flag-strip">
+    <div class="flag"></div>
+    <div>
+      <div class="hero-title">United Kingdom of Yorkshire</div>
+      <div class="hero-sub">Reference & Artifacts Hub</div>
+      <div class="hero-motto">Arte et Marte</div>
+    </div>
+    <div class="flag"></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label">Interactive Artifacts</div>
+  <div class="cards">
+
+    <a href="UKY_Premiership_Table.html" class="card">
+      <span class="card-icon">🏆</span>
+      <div class="card-title">Yorkshire Energy Premiership</div>
+      <div class="card-desc">Final league table for the current season. Portmaris Vikings champions by one point from the Monarchs. Thorham Rams' historic third place finish. Playoff clubs marked.</div>
+      <span class="card-tag">Interactive table</span>
+    </a>
+
+    <a href="UKY_Premiership_Overview.html" class="card">
+      <span class="card-icon">🏟</span>
+      <div class="card-title">Premiership Club Directory</div>
+      <div class="card-desc">All 14 Yorkshire Energy Premiership clubs. Kit colours, grounds, capacities and character for every side from Portmaris to Ventara.</div>
+      <span class="card-tag">Club cards</span>
+    </a>
+
+    <a href="UKY_Brierly_Weekend.html" class="card">
+      <span class="card-icon">🎉</span>
+      <div class="card-title">Brierly Weekend</div>
+      <div class="card-desc">The great bank holiday fixture card. Four official derbies on Derby Saturday — Gamla, Souni, El Derbi and the River Derby — plus the Sunday provincial fixtures.</div>
+      <span class="card-tag">Fixture card</span>
+    </a>
+
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-label">National Quick Reference</div>
+
+  <div class="facts-grid">
+    <div class="fact"><div class="fact-label">Capital</div><div class="fact-value">Grindalythe</div></div>
+    <div class="fact"><div class="fact-label">Monarch</div><div class="fact-value">Queen Rosa I</div></div>
+    <div class="fact"><div class="fact-label">Royal House</div><div class="fact-value">House of Verantham</div></div>
+    <div class="fact"><div class="fact-label">Founded</div><div class="fact-value">17 November 1911</div></div>
+    <div class="fact"><div class="fact-label">Population</div><div class="fact-value">c. 18–20 million</div></div>
+    <div class="fact"><div class="fact-label">Currency</div><div class="fact-value">Yorkshire Crown (CRN)</div></div>
+    <div class="fact"><div class="fact-label">Motto</div><div class="fact-value">Arte et Marte</div></div>
+    <div class="fact"><div class="fact-label">Anthem</div><div class="fact-value">From Moor and Crown</div></div>
+    <div class="fact"><div class="fact-label">National Day</div><div class="fact-value">Restoration Day, 17 Nov</div></div>
+    <div class="fact"><div class="fact-label">National Sport</div><div class="fact-value">Rugby Union</div></div>
+    <div class="fact"><div class="fact-label">Top Flight</div><div class="fact-value">Yorkshire Energy Premiership</div></div>
+    <div class="fact"><div class="fact-label">Cont. Competition</div><div class="fact-value">Stonemark Continental Shield</div></div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-label">Provinces</div>
+
+  <div class="facts-grid">
+    <div class="fact"><div class="fact-label">Norvale</div><div class="fact-value">Capital: Steinwick</div></div>
+    <div class="fact"><div class="fact-label">Rutland</div><div class="fact-value">Capital: Aldenmere</div></div>
+    <div class="fact"><div class="fact-label">Crown District</div><div class="fact-value">Capital: Grindalythe</div></div>
+    <div class="fact"><div class="fact-label">Souni</div><div class="fact-value">Capital: Haldern</div></div>
+    <div class="fact"><div class="fact-label">Scania</div><div class="fact-value">Capital: Portmaris</div></div>
+    <div class="fact"><div class="fact-label">Ecuavale</div><div class="fact-value">Capital: Granova</div></div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-label">Rugby — Brierly Weekend Derbies</div>
+
+  <div class="facts-grid">
+    <div class="fact"><div class="fact-label">11:00 — Norvale</div><div class="fact-value">The Gamla Derby</div></div>
+    <div class="fact"><div class="fact-label">13:30 — Souni</div><div class="fact-value">The Souni Derby</div></div>
+    <div class="fact"><div class="fact-label">16:00 — Ecuavale</div><div class="fact-value">El Derbi</div></div>
+    <div class="fact"><div class="fact-label">18:30 — Crown District</div><div class="fact-value">The River Derby ★</div></div>
+    <div class="fact"><div class="fact-label">Cross-province</div><div class="fact-value">The Infantry Derby</div></div>
+    <div class="fact"><div class="fact-label">Bank Holiday</div><div class="fact-value">Last Saturday of May</div></div>
+  </div>
+
+</div>
+
+<div class="footer">
+  United Kingdom of Yorkshire &nbsp;·&nbsp; Cartographic Survey Office, Grindalythe &nbsp;·&nbsp; Arte et Marte
+</div>
+
+</body>
+</html>
