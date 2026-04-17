@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScarnRail Championship — Club Directory</title>
+<style>
+  :root {
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f1efe8;
+    --color-background-tertiary: #e8e6de;
+    --color-text-primary: #1a1a18;
+    --color-text-secondary: #5f5e5a;
+    --color-text-tertiary: #888780;
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --color-border-primary: rgba(0,0,0,0.32);
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --font-sans: system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-background-primary: #1e1e1c;
+      --color-background-secondary: #2c2c2a;
+      --color-background-tertiary: #141412;
+      --color-text-primary: #e8e6de;
+      --color-text-secondary: #9c9a92;
+      --color-text-tertiary: #6a6864;
+      --color-border-tertiary: rgba(255,255,255,0.1);
+      --color-border-secondary: rgba(255,255,255,0.2);
+      --color-border-primary: rgba(255,255,255,0.3);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); background: var(--color-background-tertiary); color: var(--color-text-primary); padding: 24px 16px; min-height: 100vh; }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 2px; }
+  .subtitle { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 20px; }
+  .prem-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; padding: 8px 0; }
+  .club-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 12px 14px; transition: border-color .15s; }
+  .club-card:hover { border-color: var(--color-border-primary); }
+  .club-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .kit { width: 32px; height: 36px; border-radius: 3px; flex-shrink: 0; border: 0.5px solid var(--color-border-tertiary); }
+  .club-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); line-height: 1.2; }
+  .club-town { font-size: 11px; color: var(--color-text-secondary); margin-top: 1px; }
+  .club-meta { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .badge { font-size: 10px; padding: 2px 7px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); }
+  .cap-bar { margin-top: 8px; }
+  .cap-label { font-size: 10px; color: var(--color-text-tertiary); margin-bottom: 3px; }
+  .bar-track { height: 4px; background: var(--color-border-tertiary); border-radius: 2px; width: 100%; }
+  .bar-fill { height: 4px; border-radius: 2px; }
+  .province-header { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); letter-spacing: 1px; text-transform: uppercase; margin: 14px 0 4px; padding-left: 2px; }
+  .province-header:first-of-type { margin-top: 0; }
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+  .stat-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; text-align: center; }
+  .stat-val { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
+  .stat-lbl { font-size: 10px; color: var(--color-text-secondary); margin-top: 2px; }
+  .badge-rel { background: #fcebeb; color: #791f1f; border-color: #fcebeb; }
+  .badge-prom { background: #e6f1fb; color: #0c447c; border-color: #e6f1fb; }
+  .badge-fromprem { background: #faeeda; color: #633806; border-color: #faeeda; }
+  .badge-playoff { background: #e1f5ee; color: #085041; border-color: #e1f5ee; }
+  @media (max-width: 500px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+
+<h1>ScarnRail Championship</h1>
+<p class="subtitle">United Kingdom of Yorkshire — Club Directory</p>
+
+<div class="stats-row">
+  <div class="stat-card"><div class="stat-val">14</div><div class="stat-lbl">Championship clubs</div></div>
+  <div class="stat-card"><div class="stat-val">141,800</div><div class="stat-lbl">Total capacity</div></div>
+  <div class="stat-card"><div class="stat-val">20,000</div><div class="stat-lbl">Largest ground</div></div>
+  <div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Promoted from Nat 1</div></div>
+</div>
+
+<div class="province-header">Crown District</div>
+<div class="prem-grid">
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#4a90d9 50%,#f0f0f0 50%)"></div>
+      <div><div class="club-name">Grindalythe Albish</div><div class="club-town">Crossgate, Grindalythe</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Albion Park</span><span class="badge">10,200</span>
+      <span class="badge badge-fromprem">From Prem</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 10,200</div><div class="bar-track"><div class="bar-fill" style="width:51%;background:#4a90d9"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#f5c518 33%,#cc0000 33%,#cc0000 66%,#1a1a1a 66%)"></div>
+      <div><div class="club-name">Gothenburg Bulls</div><div class="club-town">Gothenburg, Crown District</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">The Market Ground</span><span class="badge">7,800</span>
+      <span class="badge badge-playoff">Playoff</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 7,800</div><div class="bar-track"><div class="bar-fill" style="width:39%;background:#cc0000"></div></div></div>
+  </div>
+</div>
+
+<div class="province-header">Norvale</div>
+<div class="prem-grid">
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#c8860a 50%,#1a1a1a 50%)"></div>
+      <div><div class="club-name">Södermark RFC</div><div class="club-town">Södermark, Steinwick</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Southfield Park</span><span class="badge">7,200</span>
+      <span class="badge">Suburban pride</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 7,200</div><div class="bar-track"><div class="bar-fill" style="width:36%;background:#c8860a"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#1a1a1a 50%,#4a1a6a 50%)"></div>
+      <div><div class="club-name">Grimstow Ravens</div><div class="club-town">Grimstow, Norvale</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Moorside</span><span class="badge">6,400</span>
+      <span class="badge">Moorland fortress</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 6,400</div><div class="bar-track"><div class="bar-fill" style="width:32%;background:#4a1a6a"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#f5c518 50%,#f0f0f0 50%)"></div>
+      <div><div class="club-name">Felwick Millers</div><div class="club-town">Felwick, Norvale</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">The Mill End</span><span class="badge">8,500</span>
+      <span class="badge badge-prom">Promoted</span>
+      <span class="badge badge-rel">Relegated</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 8,500</div><div class="bar-track"><div class="bar-fill" style="width:43%;background:#f5c518"></div></div></div>
+  </div>
+</div>
+
+<div class="province-header">Rutland</div>
+<div class="prem-grid">
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#003399 50%,#d4af37 50%)"></div>
+      <div><div class="club-name">Kirby Castellans</div><div class="club-town">Kirby, Rutland</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Castle Meadow</span><span class="badge">9,800</span>
+      <span class="badge">Castle backdrop</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 9,800</div><div class="bar-track"><div class="bar-fill" style="width:49%;background:#003399"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#6b0f1a 50%,#1a2a5a 50%)"></div>
+      <div><div class="club-name">Verwick Vale</div><div class="club-town">Verwick upon Ruthe, Rutland</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">The Old Quarry</span><span class="badge">9,100</span>
+      <span class="badge">Limestone cauldron</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 9,100</div><div class="bar-track"><div class="bar-fill" style="width:46%;background:#6b0f1a"></div></div></div>
+  </div>
+</div>
+
+<div class="province-header">Souni</div>
+<div class="prem-grid">
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#7a5c2a 50%,#f0f0f0 50%)"></div>
+      <div><div class="club-name">Molnlycke Falcons</div><div class="club-town">Molnlycke, Souni</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Ljungvalla Park</span><span class="badge">7,200</span>
+      <span class="badge badge-prom">Promoted</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 7,200</div><div class="bar-track"><div class="bar-fill" style="width:36%;background:#7a5c2a"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:repeating-linear-gradient(45deg,#0a2463 0px,#0a2463 12px,#6b0f1a 12px,#6b0f1a 24px,#d4af37 24px,#d4af37 36px,#f0f0f0 36px,#f0f0f0 48px)"></div>
+      <div><div class="club-name">Gross Siegharts RFC</div><div class="club-town">Gross Siegharts, Souni</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">The Feldhaus</span><span class="badge">9,600</span>
+      <span class="badge badge-rel">Relegated</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 9,600</div><div class="bar-track"><div class="bar-fill" style="width:48%;background:#0a2463"></div></div></div>
+  </div>
+</div>
+
+<div class="province-header">Scania</div>
+<div class="prem-grid">
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#1a1a1a 60%,#cc0000 60%)"></div>
+      <div><div class="club-name">Carnsmouth Seawolves</div><div class="club-town">Carnsmouth, Scania</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Carnsmouth Community Stadium</span><span class="badge">20,000</span>
+      <span class="badge badge-fromprem">From Prem</span>
+      <span class="badge badge-playoff">Playoff</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 20,000</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#cc0000"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:repeating-linear-gradient(90deg,#cc0000 0px,#cc0000 16px,#f0f0f0 16px,#f0f0f0 32px)"></div>
+      <div><div class="club-name">Valesca Torrent</div><div class="club-town">Valesca, Scania</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Kingsholm Stadium</span><span class="badge">8,900</span>
+      <span class="badge badge-rel">Relegated</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 8,900</div><div class="bar-track"><div class="bar-fill" style="width:45%;background:#cc0000"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:repeating-linear-gradient(135deg,#003399 0px,#003399 12px,#f5c518 12px,#f5c518 24px)"></div>
+      <div><div class="club-name">Havenstaal Breakers</div><div class="club-town">Havenstaal, Scania</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Vicarage Road</span><span class="badge">11,000</span>
+      <span class="badge">Northern coastal</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 11,000</div><div class="bar-track"><div class="bar-fill" style="width:55%;background:#003399"></div></div></div>
+  </div>
+</div>
+
+<div class="province-header">Ecuavale</div>
+<div class="prem-grid">
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#e87722 50%,#1a1a1a 50%)"></div>
+      <div><div class="club-name">Granova Colts</div><div class="club-town">Granova, Ecuavale</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Confluencia Park</span><span class="badge">10,600</span>
+      <span class="badge badge-playoff">Playoff</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 10,600</div><div class="bar-track"><div class="bar-fill" style="width:53%;background:#e87722"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#f5c518 50%,#cc0000 50%)"></div>
+      <div><div class="club-name">Fornalutx RFC</div><div class="club-town">Fornalutx, Ecuavale</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">La Roca</span><span class="badge">8,400</span>
+      <span class="badge badge-prom">Promoted</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 8,400</div><div class="bar-track"><div class="bar-fill" style="width:42%;background:#f5c518"></div></div></div>
+  </div>
+</div>
+
+<div style="margin-top:18px;padding-top:14px;border-top:0.5px solid var(--color-border-tertiary)">
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Season status key</div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px">
+    <span class="badge badge-playoff">Playoff — top 3, promotion round robin</span>
+    <span class="badge badge-fromprem">From Prem — relegated from Premiership</span>
+    <span class="badge badge-prom">Promoted — up from National 1</span>
+    <span class="badge badge-rel">Relegated — down to National 1</span>
+  </div>
+</div>
+
+</body>
+</html>
