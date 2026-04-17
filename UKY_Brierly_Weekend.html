@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brierly Weekend — UKY Premiership</title>
+<style>
+  :root {
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f1efe8;
+    --color-background-tertiary: #e8e6de;
+    --color-text-primary: #1a1a18;
+    --color-text-secondary: #5f5e5a;
+    --color-text-tertiary: #888780;
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --color-border-primary: rgba(0,0,0,0.32);
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --font-sans: system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-background-primary: #1e1e1c;
+      --color-background-secondary: #2c2c2a;
+      --color-background-tertiary: #141412;
+      --color-text-primary: #e8e6de;
+      --color-text-secondary: #9c9a92;
+      --color-text-tertiary: #6a6864;
+      --color-border-tertiary: rgba(255,255,255,0.1);
+      --color-border-secondary: rgba(255,255,255,0.2);
+      --color-border-primary: rgba(255,255,255,0.3);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-background-tertiary);
+    color: var(--color-text-primary);
+    padding: 24px 16px;
+    min-height: 100vh;
+  }
+  .bw-header { padding: 16px 0 12px; border-bottom: 0.5px solid var(--color-border-secondary); margin-bottom: 16px; }
+  .bw-title { font-size: 20px; font-weight: 500; color: var(--color-text-primary); letter-spacing: .5px; }
+  .bw-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 3px; }
+  .bw-date { font-size: 11px; color: var(--color-text-tertiary); margin-top: 2px; font-style: italic; }
+  .day-label {
+    font-size: 10px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--color-text-secondary);
+    margin: 14px 0 8px; padding-left: 2px;
+  }
+  .fixture-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 12px 14px; margin-bottom: 8px;
+    transition: border-color .15s;
+  }
+  .fixture-card:hover { border-color: var(--color-border-primary); }
+  .fixture-card.official { border-left: 3px solid #ba7517; }
+  .fixture-card.unofficial { border-left: 3px solid var(--color-border-secondary); }
+  .fix-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .fix-time { font-size: 13px; font-weight: 500; color: var(--color-text-primary); min-width: 48px; }
+  .fix-teams { flex: 1; text-align: center; }
+  .derby-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+  .teams-line { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+  .fix-right { text-align: right; min-width: 80px; }
+  .venue-txt { font-size: 10px; color: var(--color-text-tertiary); }
+  .weather { font-size: 10px; margin-top: 2px; }
+  .fix-badges { display: flex; gap: 5px; margin-top: 8px; flex-wrap: wrap; }
+  .fbadge {
+    font-size: 9px; padding: 2px 7px; border-radius: 4px;
+    border: 0.5px solid var(--color-border-tertiary);
+    color: var(--color-text-secondary);
+  }
+  .official-badge { background: #faeeda; color: #633806; border-color: #faeeda; }
+  .new-badge { background: #e6f1fb; color: #0c447c; border-color: #e6f1fb; }
+  .prov-badge { background: #e1f5ee; color: #085041; border-color: #e1f5ee; }
+  .vs { font-size: 11px; color: var(--color-text-tertiary); margin: 0 4px; }
+  .kit-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    display: inline-block; vertical-align: middle; margin: 0 2px;
+    border: 0.5px solid var(--color-border-tertiary);
+  }
+  .sunday-note {
+    font-size: 11px; color: var(--color-text-tertiary);
+    font-style: italic; margin-top: 4px; padding-left: 2px;
+  }
+  .pub-banner {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 8px 12px; margin-bottom: 14px;
+    font-size: 11px; color: var(--color-text-secondary); line-height: 1.5;
+  }
+  .pub-hl { color: var(--color-text-primary); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="bw-header">
+  <div class="bw-title">Brierly Weekend</div>
+  <div class="bw-sub">United Kingdom of Yorkshire — Premiership Derby Fixtures</div>
+  <div class="bw-date">Last Saturday of May &nbsp;·&nbsp; Bank Holiday Weekend &nbsp;·&nbsp; Venues rotate annually</div>
+</div>
+
+<div class="pub-banner">
+  <span class="pub-hl">Brierly Day — Last Saturday of May.</span> A national bank holiday honouring General James Brierly, hero of the civil war. Pubs open from <span class="pub-hl">09:00</span> across the country. Four official derbies, back to back. One day. The whole nation watching.
+</div>
+
+<div class="day-label">Saturday — Derby Day</div>
+
+<div class="fixture-card official">
+  <div class="fix-top">
+    <div class="fix-time">11:00</div>
+    <div class="fix-teams">
+      <div class="derby-name">The Gamla Derby</div>
+      <div class="teams-line">
+        <span class="kit-dot" style="background:#cc0000"></span>Steinwick Knights
+        <span class="vs">vs</span>
+        <span class="kit-dot" style="background:#f5c518"></span>SASA
+      </div>
+    </div>
+    <div class="fix-right">
+      <div class="venue-txt">Gamla Ullevi / Bootham Crescent</div>
+      <div class="weather">&#x1F4A7; Cold · Rain likely · Steinwick</div>
+    </div>
+  </div>
+  <div class="fix-badges">
+    <span class="fbadge official-badge">Official derby</span>
+    <span class="fbadge">Norvale</span>
+    <span class="fbadge">Old town vs new town</span>
+    <span class="fbadge">SASA returned to Prem this season</span>
+  </div>
+</div>
+
+<div class="fixture-card official">
+  <div class="fix-top">
+    <div class="fix-time">13:30</div>
+    <div class="fix-teams">
+      <div class="derby-name">The Souni Derby</div>
+      <div class="teams-line">
+        <span class="kit-dot" style="background:#003399"></span>Haldern Saints
+        <span class="vs">vs</span>
+        <span class="kit-dot" style="background:#1a1a1a"></span>Thorham Rams
+      </div>
+    </div>
+    <div class="fix-right">
+      <div class="venue-txt">The Rec / Edgley Road</div>
+      <div class="weather">&#x26C5; Mild · Spring sun · Souni</div>
+    </div>
+  </div>
+  <div class="fix-badges">
+    <span class="fbadge official-badge">Official derby</span>
+    <span class="fbadge">Souni</span>
+    <span class="fbadge">Record holders vs university club</span>
+    <span class="fbadge">Rams in Stonemark Shield this season</span>
+  </div>
+</div>
+
+<div class="fixture-card official">
+  <div class="fix-top">
+    <div class="fix-time">16:00</div>
+    <div class="fix-teams">
+      <div class="derby-name">El Derbi</div>
+      <div class="teams-line">
+        <span class="kit-dot" style="background:#d4538a"></span>Granova Steel
+        <span class="vs">vs</span>
+        <span class="kit-dot" style="background:#e8e8e8;border:0.5px solid #ccc"></span>Ventara Hurricanes
+      </div>
+    </div>
+    <div class="fix-right">
+      <div class="venue-txt">The Foundry / Campo del Sol</div>
+      <div class="weather">&#x2600;&#xFE0F; Hot · Full sun · Ecuavale</div>
+    </div>
+  </div>
+  <div class="fix-badges">
+    <span class="fbadge official-badge">Official derby</span>
+    <span class="fbadge">Ecuavale</span>
+    <span class="fbadge">The Monster vs The Entertainers</span>
+    <span class="fbadge">Pink vs all white</span>
+  </div>
+</div>
+
+<div class="fixture-card official">
+  <div class="fix-top">
+    <div class="fix-time">18:30</div>
+    <div class="fix-teams">
+      <div class="derby-name">The River Derby ★</div>
+      <div class="teams-line">
+        <span class="kit-dot" style="background:#6a0dad"></span>Grindalythe Monarchs
+        <span class="vs">vs</span>
+        <span class="kit-dot" style="background:#2d5a1b"></span>Grindalythe City
+      </div>
+    </div>
+    <div class="fix-right">
+      <div class="venue-txt">Crown Financial Arena / Goodramgate</div>
+      <div class="weather">&#x1F307; Evening · Capital city · Crown District</div>
+    </div>
+  </div>
+  <div class="fix-badges">
+    <span class="fbadge official-badge">Official derby · Headline fixture</span>
+    <span class="fbadge">Crown District</span>
+    <span class="fbadge">North bank vs south bank</span>
+    <span class="fbadge">Royal patron in attendance</span>
+  </div>
+</div>
+
+<div class="day-label">Sunday — Supporting Fixtures</div>
+<div class="sunday-note">Three fixtures. Same pairings every Brierly Weekend. Nobody calls them derbies. Not yet.</div>
+<br>
+
+<div class="fixture-card unofficial">
+  <div class="fix-top">
+    <div class="fix-time">14:00</div>
+    <div class="fix-teams">
+      <div class="derby-name" style="font-size:12px;color:var(--color-text-secondary)">Portmaris Vikings vs Stenvik Mariners</div>
+      <div class="teams-line">
+        <span class="kit-dot" style="background:#f5c518"></span>Vikings
+        <span class="vs">vs</span>
+        <span class="kit-dot" style="background:#4a6fa6"></span>Mariners
+      </div>
+    </div>
+    <div class="fix-right">
+      <div class="venue-txt">YNS Arena / Waterside</div>
+    </div>
+  </div>
+  <div class="fix-badges">
+    <span class="fbadge prov-badge">Scania province</span>
+    <span class="fbadge">Champions vs surprise package</span>
+  </div>
+</div>
+
+<div class="fixture-card unofficial">
+  <div class="fix-top">
+    <div class="fix-time">14:00</div>
+    <div class="fix-teams">
+      <div class="derby-name" style="font-size:12px;color:var(--color-text-secondary)">Aldenmere Legio vs Mervale Equites</div>
+      <div class="teams-line">
+        <span class="kit-dot" style="background:#cc0000"></span>Legio
+        <span class="vs">vs</span>
+        <span class="kit-dot" style="background:#2d6a2d"></span>Equites
+      </div>
+    </div>
+    <div class="fix-right">
+      <div class="venue-txt">Brierlygate / Valorum Park</div>
+    </div>
+  </div>
+  <div class="fix-badges">
+    <span class="fbadge prov-badge">Rutland province</span>
+    <span class="fbadge">Two Rutish clubs · Brierly Day</span>
+  </div>
+</div>
+
+<div class="fixture-card unofficial">
+  <div class="fix-top">
+    <div class="fix-time">14:00</div>
+    <div class="fix-teams">
+      <div class="derby-name" style="font-size:12px;color:var(--color-text-secondary)">Newbury Blues vs Aldgate Foresters</div>
+      <div class="teams-line">
+        <span class="kit-dot" style="background:#4a90d9"></span>Blues
+        <span class="vs">vs</span>
+        <span class="kit-dot" style="background:#2d6a2d"></span>Foresters
+      </div>
+    </div>
+    <div class="fix-right">
+      <div class="venue-txt">Monks Lane / Smithson Lane</div>
+    </div>
+  </div>
+  <div class="fix-badges">
+    <span class="fbadge new-badge">A new rivalry forming</span>
+    <span class="fbadge">Two smaller clubs · Great spirit</span>
+  </div>
+</div>
+
+</body>
+</html>

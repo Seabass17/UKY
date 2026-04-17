@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UKY Premiership — Club Overview</title>
+<style>
+  :root {
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f1efe8;
+    --color-background-tertiary: #e8e6de;
+    --color-text-primary: #1a1a18;
+    --color-text-secondary: #5f5e5a;
+    --color-text-tertiary: #888780;
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --color-border-primary: rgba(0,0,0,0.32);
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --font-sans: system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-background-primary: #1e1e1c;
+      --color-background-secondary: #2c2c2a;
+      --color-background-tertiary: #141412;
+      --color-text-primary: #e8e6de;
+      --color-text-secondary: #9c9a92;
+      --color-text-tertiary: #6a6864;
+      --color-border-tertiary: rgba(255,255,255,0.1);
+      --color-border-secondary: rgba(255,255,255,0.2);
+      --color-border-primary: rgba(255,255,255,0.3);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-background-tertiary);
+    color: var(--color-text-primary);
+    padding: 24px 16px;
+    min-height: 100vh;
+  }
+  h1 {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 20px;
+  }
+  .prem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+    padding: 8px 0;
+  }
+  .club-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 12px 14px;
+    transition: border-color .15s;
+  }
+  .club-card:hover { border-color: var(--color-border-primary); }
+  .club-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .kit {
+    width: 32px; height: 36px; border-radius: 3px; flex-shrink: 0;
+    border: 0.5px solid var(--color-border-tertiary);
+  }
+  .club-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); line-height: 1.2; }
+  .club-town { font-size: 11px; color: var(--color-text-secondary); margin-top: 1px; }
+  .club-meta { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .badge {
+    font-size: 10px; padding: 2px 7px;
+    border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--color-border-tertiary);
+    color: var(--color-text-secondary);
+  }
+  .cap-bar { margin-top: 8px; }
+  .cap-label { font-size: 10px; color: var(--color-text-tertiary); margin-bottom: 3px; }
+  .bar-track { height: 4px; background: var(--color-border-tertiary); border-radius: 2px; width: 100%; }
+  .bar-fill { height: 4px; border-radius: 2px; }
+  .province-header {
+    font-size: 11px; font-weight: 500; color: var(--color-text-secondary);
+    letter-spacing: 1px; text-transform: uppercase;
+    margin: 14px 0 4px; padding-left: 2px;
+  }
+  .province-header:first-of-type { margin-top: 0; }
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+  .stat-card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 10px 12px; text-align: center;
+  }
+  .stat-val { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
+  .stat-lbl { font-size: 10px; color: var(--color-text-secondary); margin-top: 2px; }
+  .derby-section {
+    margin-top: 18px; padding-top: 14px;
+    border-top: 0.5px solid var(--color-border-tertiary);
+  }
+  .derby-header {
+    font-size: 11px; font-weight: 500; color: var(--color-text-secondary);
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .derby-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+  @media (max-width: 500px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<h1>UKY Premiership</h1>
+<p class="subtitle">United Kingdom of Yorkshire — Official Club Directory</p>
+
+<div class="stats-row">
+  <div class="stat-card"><div class="stat-val">14</div><div class="stat-lbl">Premiership clubs</div></div>
+  <div class="stat-card"><div class="stat-val">361,167</div><div class="stat-lbl">Total capacity</div></div>
+  <div class="stat-card"><div class="stat-val">42,000</div><div class="stat-lbl">Largest ground</div></div>
+  <div class="stat-card"><div class="stat-val">5</div><div class="stat-lbl">Great derbies</div></div>
+</div>
+
+<div class="province-header">Crown District</div>
+<div class="prem-grid">
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#6a0dad 50%,#d4af37 50%)"></div>
+      <div><div class="club-name">Grindalythe Monarchs</div><div class="club-town">Crown District — North bank</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Crown Financial Arena</span>
+      <span class="badge">38,500</span>
+      <span class="badge">Royal patron: Queen Rosa I</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 38,500</div><div class="bar-track"><div class="bar-fill" style="width:91%;background:#6a0dad"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#1a1a1a 33%,#2d5a1b 33%,#2d5a1b 66%,#f0f0f0 66%)"></div>
+      <div><div class="club-name">Grindalythe City</div><div class="club-town">Crown District — South bank</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Goodramgate</span>
+      <span class="badge">35,400</span>
+      <span class="badge">The people's club</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 35,400</div><div class="bar-track"><div class="bar-fill" style="width:84%;background:#2d5a1b"></div></div></div>
+  </div>
+</div>
+
+<div class="province-header">Norvale</div>
+<div class="prem-grid">
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#cc0000 33%,#f0f0f0 33%,#f0f0f0 66%,#003399 66%)"></div>
+      <div><div class="club-name">Steinwick Knights</div><div class="club-town">Steinwick, Norvale</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Bootham Crescent</span>
+      <span class="badge">27,500</span>
+      <span class="badge">Glory days past</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 27,500</div><div class="bar-track"><div class="bar-fill" style="width:65%;background:#cc0000"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:#f5c518"></div>
+      <div><div class="club-name">SASA</div><div class="club-town">Gammelstad, Steinwick</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Gamla Ullevi</span>
+      <span class="badge">22,000</span>
+      <span class="badge">Community founded</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 22,000</div><div class="bar-track"><div class="bar-fill" style="width:52%;background:#f5c518"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#4a90d9 50%,#1a1a1a 50%)"></div>
+      <div><div class="club-name">Newbury Blues</div><div class="club-town">Newbury, Norvale</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Monks Lane</span>
+      <span class="badge">10,217</span>
+      <span class="badge">Giant killers</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 10,217</div><div class="bar-track"><div class="bar-fill" style="width:24%;background:#4a90d9"></div></div></div>
+  </div>
+</div>
+
+<div class="province-header">Rutland</div>
+<div class="prem-grid">
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#cc0000 60%,#d4af37 60%)"></div>
+      <div><div class="club-name">Aldenmere Legio</div><div class="club-town">Aldenmere, Rutland</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Brierlygate</span>
+      <span class="badge">27,750</span>
+      <span class="badge">Title contenders</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 27,750</div><div class="bar-track"><div class="bar-fill" style="width:66%;background:#cc0000"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#f0f0f0 50%,#2d6a2d 50%)"></div>
+      <div><div class="club-name">Mervale Equites</div><div class="club-town">Mervale, Rutland</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Valorum Park</span>
+      <span class="badge">14,300</span>
+      <span class="badge">Cauldron atmosphere</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 14,300</div><div class="bar-track"><div class="bar-fill" style="width:34%;background:#2d6a2d"></div></div></div>
+  </div>
+</div>
+
+<div class="province-header">Souni</div>
+<div class="prem-grid">
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#003399 33%,#f0f0f0 33%,#f0f0f0 66%,#1a1a1a 66%)"></div>
+      <div><div class="club-name">Haldern Saints</div><div class="club-town">Haldern, Souni</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">The Rec</span>
+      <span class="badge">27,000</span>
+      <span class="badge">Record holders</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 27,000</div><div class="bar-track"><div class="bar-fill" style="width:64%;background:#003399"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#1a1a1a 50%,#f0f0f0 50%)"></div>
+      <div><div class="club-name">Thorham Rams</div><div class="club-town">Thorham, Souni</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Edgley Road</span>
+      <span class="badge">17,000</span>
+      <span class="badge">University pipeline</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 17,000</div><div class="bar-track"><div class="bar-fill" style="width:40%;background:#1a1a1a"></div></div></div>
+  </div>
+</div>
+
+<div class="province-header">Scania</div>
+<div class="prem-grid">
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#f5c518 50%,#003399 50%)"></div>
+      <div><div class="club-name">Portmaris Vikings</div><div class="club-town">Portmaris, Scania</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">YNS Arena</span>
+      <span class="badge">37,500</span>
+      <span class="badge">Naval city</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 37,500</div><div class="bar-track"><div class="bar-fill" style="width:89%;background:#003399"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#7a8fa6 50%,#4a6fa6 50%)"></div>
+      <div><div class="club-name">Stenvik Mariners</div><div class="club-town">Stenvik, Scania</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Waterside</span>
+      <span class="badge">16,000</span>
+      <span class="badge">Coastal port town</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 16,000</div><div class="bar-track"><div class="bar-fill" style="width:38%;background:#4a6fa6"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:linear-gradient(135deg,#2d6a2d 50%,#8b5e3c 50%)"></div>
+      <div><div class="club-name">Aldgate Foresters</div><div class="club-town">Aldgate, Scania</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Smithson Lane</span>
+      <span class="badge">16,000</span>
+      <span class="badge">Market town roots</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 16,000</div><div class="bar-track"><div class="bar-fill" style="width:38%;background:#2d6a2d"></div></div></div>
+  </div>
+</div>
+
+<div class="province-header">Ecuavale</div>
+<div class="prem-grid">
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:#d4538a"></div>
+      <div><div class="club-name">Granova Steel</div><div class="club-town">Granova, Ecuavale</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">The Foundry</span>
+      <span class="badge">42,000</span>
+      <span class="badge">The Monster</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 42,000</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#d4538a"></div></div></div>
+  </div>
+  <div class="club-card">
+    <div class="club-top">
+      <div class="kit" style="background:#f0f0f0;border:0.5px solid var(--color-border-tertiary)"></div>
+      <div><div class="club-name">Ventara Hurricanes</div><div class="club-town">Ventara, Ecuavale</div></div>
+    </div>
+    <div class="club-meta">
+      <span class="badge">Campo del Sol</span>
+      <span class="badge">21,500</span>
+      <span class="badge">Neutrals' favourite</span>
+    </div>
+    <div class="cap-bar"><div class="cap-label">Capacity — 21,500</div><div class="bar-track"><div class="bar-fill" style="width:51%;background:#888"></div></div></div>
+  </div>
+</div>
+
+<div class="derby-section">
+  <div class="derby-header">Derby Weekend fixtures</div>
+  <div class="derby-badges">
+    <span class="badge">The River Derby — Monarchs vs City</span>
+    <span class="badge">The Souni Derby — Saints vs Rams</span>
+    <span class="badge">The Gamla Derby — Knights vs SASA</span>
+    <span class="badge">The Infantry Derby — Equites vs Knights</span>
+    <span class="badge">El Derbi — Steel vs Hurricanes</span>
+  </div>
+</div>
+
+</body>
+</html>

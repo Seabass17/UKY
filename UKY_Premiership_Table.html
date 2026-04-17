@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UKY Premiership — Final Table</title>
+<style>
+  :root {
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f1efe8;
+    --color-background-tertiary: #e8e6de;
+    --color-text-primary: #1a1a18;
+    --color-text-secondary: #5f5e5a;
+    --color-text-tertiary: #888780;
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --color-border-primary: rgba(0,0,0,0.32);
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --font-sans: system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-background-primary: #1e1e1c;
+      --color-background-secondary: #2c2c2a;
+      --color-background-tertiary: #141412;
+      --color-text-primary: #e8e6de;
+      --color-text-secondary: #9c9a92;
+      --color-text-tertiary: #6a6864;
+      --color-border-tertiary: rgba(255,255,255,0.1);
+      --color-border-secondary: rgba(255,255,255,0.2);
+      --color-border-primary: rgba(255,255,255,0.3);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-background-tertiary);
+    color: var(--color-text-primary);
+    padding: 24px 16px;
+    min-height: 100vh;
+  }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 2px; }
+  .season-label { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 18px; }
+  .tbl-wrap { overflow-x: auto; width: 100%; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 600px; }
+  th {
+    font-size: 10px; font-weight: 500; color: var(--color-text-secondary);
+    letter-spacing: .5px; text-transform: uppercase;
+    padding: 6px 8px; border-bottom: 0.5px solid var(--color-border-secondary);
+    text-align: center; white-space: nowrap;
+  }
+  th.left { text-align: left; }
+  td {
+    padding: 7px 8px; border-bottom: 0.5px solid var(--color-border-tertiary);
+    color: var(--color-text-primary); text-align: center; white-space: nowrap;
+  }
+  td.left { text-align: left; }
+  tr:last-child td { border-bottom: none; }
+  .pos { font-weight: 500; width: 28px; color: var(--color-text-secondary); font-size: 12px; }
+  .club-name { font-weight: 500; font-size: 13px; }
+  .club-sub { font-size: 10px; color: var(--color-text-tertiary); margin-top: 1px; }
+  .badge-sm {
+    font-size: 9px; padding: 2px 5px; border-radius: 4px;
+    margin-left: 4px; vertical-align: middle;
+    display: inline-block; margin-top: 1px;
+  }
+  .champ   { background: #faeeda; color: #633806; }
+  .shield  { background: #e1f5ee; color: #085041; }
+  .playoff { background: #fcebeb; color: #791f1f; }
+  .promoted{ background: #e6f1fb; color: #0c447c; }
+  .stat { color: var(--color-text-secondary); font-size: 12px; }
+  .pts { font-weight: 500; color: var(--color-text-primary); }
+  .pos-champ  { color: #ba7517; }
+  .pos-shield { color: #0f6e56; }
+  .pos-playoff{ color: #a32d2d; }
+  .divider td { border-top: 1.5px solid var(--color-border-secondary); }
+  .story-box {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-lg);
+    padding: 12px 14px; margin-bottom: 14px;
+    font-size: 12px; color: var(--color-text-secondary); line-height: 1.6;
+  }
+  .story-hl { color: var(--color-text-primary); font-weight: 500; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; font-size: 11px; color: var(--color-text-secondary); }
+  .leg-item { display: flex; align-items: center; gap: 4px; }
+  .leg-sq { width: 8px; height: 8px; border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<h1>UKY Premiership</h1>
+<p class="season-label">Final table — current season</p>
+
+<div class="story-box">
+  <span class="story-hl">Season story:</span> Portmaris Vikings won the Premiership by a single point from Grindalythe Monarchs — despite winning four fewer games. The Vikings' relentless try-scoring rugby earned them 20 bonus points across the season. The title was settled in the final fixture at the YNS Arena: Vikings 34–29 Monarchs. The Monarchs needed the Vikings not to score a fifth try. The Vikings scored it in the <span class="story-hl">79th minute.</span> Thorham Rams finished third in the surprise of the season, earning their first ever Stonemark Continental Shield place. SASA returned to the Premiership and finished a creditable 10th. Aldgate Foresters, the other promoted side, face the playoff after a difficult debut campaign.
+</div>
+
+<div class="legend">
+  <div class="leg-item"><div class="leg-sq" style="background:#ba7517"></div>Champions</div>
+  <div class="leg-item"><div class="leg-sq" style="background:#0f6e56"></div>Stonemark Continental Shield</div>
+  <div class="leg-item"><div class="leg-sq" style="background:#a32d2d"></div>Relegation playoff</div>
+  <div class="leg-item"><div class="leg-sq" style="background:#185fa5"></div>Promoted</div>
+</div>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr>
+  <th class="left" style="width:28px">Pos</th>
+  <th class="left">Club</th>
+  <th>P</th><th>W</th><th>D</th><th>L</th>
+  <th>PF</th><th>PA</th><th>PD</th><th>TF</th>
+  <th>Pts</th>
+</tr>
+</thead>
+<tbody id="table-body"></tbody>
+</table>
+</div>
+
+<script>
+const data = [
+  {pos:1,  name:"Portmaris Vikings",    province:"Scania",         P:26,W:18,D:1,L:7,  PF:817,PA:588,TF:104,Pts:94, tags:["champ","shield"]},
+  {pos:2,  name:"Grindalythe Monarchs", province:"Crown District", P:26,W:22,D:0,L:4,  PF:799,PA:518,TF:98, Pts:93, tags:["shield"]},
+  {pos:3,  name:"Thorham Rams",         province:"Souni",          P:26,W:18,D:1,L:7,  PF:747,PA:565,TF:92, Pts:81, tags:["shield"]},
+  {pos:4,  name:"Stenvik Mariners",     province:"Scania",         P:26,W:17,D:0,L:9,  PF:728,PA:633,TF:83, Pts:74, tags:["shield"]},
+  {pos:5,  name:"Aldenmere Legio",      province:"Rutland",        P:26,W:14,D:0,L:12, PF:760,PA:666,TF:94, Pts:61, tags:[]},
+  {pos:6,  name:"Grindalythe City",     province:"Crown District", P:26,W:12,D:2,L:12, PF:709,PA:670,TF:86, Pts:58, tags:[]},
+  {pos:7,  name:"Haldern Saints",       province:"Souni",          P:26,W:11,D:2,L:13, PF:632,PA:703,TF:73, Pts:51, tags:[]},
+  {pos:8,  name:"Granova Steel",        province:"Ecuavale",       P:26,W:11,D:1,L:14, PF:675,PA:629,TF:83, Pts:49, tags:[]},
+  {pos:9,  name:"Newbury Blues",        province:"Norvale",        P:26,W:11,D:1,L:14, PF:614,PA:760,TF:67, Pts:49, tags:[]},
+  {pos:10, name:"SASA",                 province:"Norvale",        P:26,W:11,D:2,L:13, PF:668,PA:747,TF:77, Pts:48, tags:["promoted"]},
+  {pos:11, name:"Ventara Hurricanes",   province:"Ecuavale",       P:26,W:8, D:2,L:16, PF:683,PA:817,TF:77, Pts:40, tags:[]},
+  {pos:12, name:"Mervale Equites",      province:"Rutland",        P:26,W:9, D:1,L:16, PF:625,PA:699,TF:67, Pts:38, tags:["playoff"]},
+  {pos:13, name:"Steinwick Knights",    province:"Norvale",        P:26,W:6, D:0,L:20, PF:603,PA:764,TF:66, Pts:26, tags:["playoff"]},
+  {pos:14, name:"Aldgate Foresters",    province:"Scania",         P:26,W:7, D:1,L:18, PF:546,PA:847,TF:59, Pts:24, tags:["promoted","playoff"]},
+];
+
+const tagDef = {
+  champ:    {text:"Champions",          cls:"champ"},
+  shield:   {text:"Continental Shield", cls:"shield"},
+  playoff:  {text:"Playoff",            cls:"playoff"},
+  promoted: {text:"Promoted",           cls:"promoted"},
+};
+
+const posColorMap = pos => {
+  if(pos === 1) return "pos-champ";
+  if(pos <= 4)  return "pos-shield";
+  if(pos >= 12) return "pos-playoff";
+  return "";
+};
+
+const dividers = [1, 4, 11];
+const tbody = document.getElementById("table-body");
+
+data.forEach(r => {
+  const tr = document.createElement("tr");
+  if(dividers.includes(r.pos)) tr.className = "divider";
+  const pd = r.PF - r.PA;
+  const pdStr = (pd >= 0 ? "+" : "") + pd;
+  const badges = r.tags.map(t => `<span class="badge-sm ${tagDef[t].cls}">${tagDef[t].text}</span>`).join("");
+  tr.innerHTML = `
+    <td class="pos ${posColorMap(r.pos)}">${r.pos}</td>
+    <td class="left">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:2px">
+        <span class="club-name">${r.name}</span>${badges}
+      </div>
+      <div class="club-sub">${r.province}</div>
+    </td>
+    <td class="stat">${r.P}</td>
+    <td class="stat">${r.W}</td>
+    <td class="stat">${r.D}</td>
+    <td class="stat">${r.L}</td>
+    <td class="stat">${r.PF}</td>
+    <td class="stat">${r.PA}</td>
+    <td class="stat">${pdStr}</td>
+    <td class="stat">${r.TF}</td>
+    <td class="pts">${r.Pts}</td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
+</body>
+</html>
