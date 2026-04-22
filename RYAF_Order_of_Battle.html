@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Yorkshire Air Force — Order of Battle</title>
+<style>
+  :root {
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f1efe8;
+    --color-background-tertiary: #e8e6de;
+    --color-text-primary: #1a1a18;
+    --color-text-secondary: #5f5e5a;
+    --color-text-tertiary: #888780;
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --color-border-primary: rgba(0,0,0,0.32);
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --font-sans: system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-background-primary: #1e1e1c;
+      --color-background-secondary: #2c2c2a;
+      --color-background-tertiary: #141412;
+      --color-text-primary: #e8e6de;
+      --color-text-secondary: #9c9a92;
+      --color-text-tertiary: #6a6864;
+      --color-border-tertiary: rgba(255,255,255,0.1);
+      --color-border-secondary: rgba(255,255,255,0.2);
+      --color-border-primary: rgba(255,255,255,0.3);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); background: var(--color-background-tertiary); color: var(--color-text-primary); padding: 24px 16px; min-height: 100vh; }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 2px; }
+  .subtitle { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 6px; }
+  .motto { font-size: 11px; color: var(--color-text-tertiary); font-style: italic; margin-bottom: 20px; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; margin-bottom: 20px; }
+  .stat-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; text-align: center; }
+  .stat-val { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
+  .stat-lbl { font-size: 10px; color: var(--color-text-secondary); margin-top: 2px; }
+  .province-header { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); letter-spacing: 1px; text-transform: uppercase; margin: 18px 0 8px; padding-left: 2px; border-bottom: 0.5px solid var(--color-border-tertiary); padding-bottom: 4px; }
+  .base-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; margin-bottom: 10px; }
+  .base-card.super { border-left: 3px solid #ba7517; }
+  .base-card.medium { border-left: 3px solid #185fa5; }
+  .base-card.single { border-left: 3px solid var(--color-border-secondary); }
+  .base-card.hq { border-left: 3px solid #0f6e56; }
+  .base-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+  .base-name { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+  .base-sub { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+  .base-type { font-size: 9px; padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+  .type-super { background: #faeeda; color: #633806; }
+  .type-medium { background: #e6f1fb; color: #0c447c; }
+  .type-single { background: var(--color-background-secondary); color: var(--color-text-secondary); }
+  .type-hq { background: #e1f5ee; color: #085041; }
+  .squadrons { display: flex; flex-direction: column; gap: 6px; }
+  .sqn-row { display: flex; align-items: center; gap: 10px; padding: 6px 10px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); }
+  .sqn-num { font-size: 12px; font-weight: 500; color: var(--color-text-primary); min-width: 60px; }
+  .sqn-name { font-size: 11px; color: #ba7517; font-style: italic; }
+  .sqn-aircraft { font-size: 11px; color: var(--color-text-secondary); flex: 1; }
+  .sqn-role { font-size: 10px; color: var(--color-text-tertiary); text-align: right; white-space: nowrap; }
+  .badge-elite { font-size: 9px; padding: 1px 5px; border-radius: 3px; background: #faeeda; color: #633806; margin-left: 4px; }
+  .badge-joint { font-size: 9px; padding: 1px 5px; border-radius: 3px; background: #e1f5ee; color: #085041; margin-left: 4px; }
+  .hq-note { font-size: 12px; color: var(--color-text-secondary); font-style: italic; padding: 8px 10px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); }
+  .inventory-section { margin-top: 24px; }
+  .inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; margin-top: 10px; }
+  .inv-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; }
+  .inv-type { font-size: 12px; font-weight: 500; color: var(--color-text-primary); }
+  .inv-role { font-size: 10px; color: var(--color-text-secondary); margin-top: 2px; }
+  .inv-qty { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+  .inv-unit { font-size: 10px; color: var(--color-text-tertiary); }
+  .section-divider { height: 0.5px; background: var(--color-border-tertiary); margin: 20px 0; }
+  @media (max-width: 500px) { .stats-row { grid-template-columns: repeat(3, 1fr); } .sqn-role { display: none; } }
+</style>
+</head>
+<body>
+
+<h1>Royal Yorkshire Air Force</h1>
+<p class="subtitle">Order of Battle — Current Establishment</p>
+<p class="motto">Founded 1930 · Successor to the Yorkshire Flying Corps (est. 1911) · Arte et Marte</p>
+
+<div class="stats-row">
+  <div class="stat-card"><div class="stat-val">34</div><div class="stat-lbl">Squadrons</div></div>
+  <div class="stat-card"><div class="stat-val">16</div><div class="stat-lbl">Bases</div></div>
+  <div class="stat-card"><div class="stat-val">391</div><div class="stat-lbl">Fixed wing</div></div>
+  <div class="stat-card"><div class="stat-val">78</div><div class="stat-lbl">Rotary</div></div>
+  <div class="stat-card"><div class="stat-val">200+</div><div class="stat-lbl">VPS Talons</div></div>
+  <div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Named sqns</div></div>
+</div>
+
+<div class="province-header">Scania</div>
+
+<div class="base-card super">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Snetterton <span class="badge-joint">Joint RYAF/RYN</span></div>
+      <div class="base-sub">Near Portmaris · Largest base in UKY · Lossiemouth scale</div>
+    </div>
+    <span class="base-type type-super">Super base</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 96 Sqn</span>
+      <span class="sqn-name">The Eagles</span>
+      <span class="sqn-aircraft">Gripen E</span>
+      <span class="sqn-role">Air defence · Great War formation</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">RYN Det.</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">MH-90</span>
+      <span class="sqn-role">Naval helicopter element</span>
+    </div>
+  </div>
+</div>
+
+<div class="base-card super">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Haverton</div>
+      <div class="base-sub">Between Portmaris and Carnsmouth · Right on the eastern coast · Carrier aviation shore base</div>
+    </div>
+    <span class="base-type type-super">Super base</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 3 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">F-35C</span>
+      <span class="sqn-role">Carrier CATOBAR · RYS Resolute</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 14 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">F-35B</span>
+      <span class="sqn-role">Carrier STOVL</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 19 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">F-35B</span>
+      <span class="sqn-role">Carrier STOVL</span>
+    </div>
+  </div>
+</div>
+
+<div class="base-card medium">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Scarnmouth Heath</div>
+      <div class="base-sub">Eastern Scania · Maritime patrol focus · Named from the River Scarn</div>
+    </div>
+    <span class="base-type type-medium">Medium base</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 5 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">P-8 Poseidon</span>
+      <span class="sqn-role">Maritime patrol</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 8 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">E-7A Wedgetail</span>
+      <span class="sqn-role">Airborne early warning</span>
+    </div>
+  </div>
+</div>
+
+<div class="province-header">Norvale</div>
+
+<div class="base-card super">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Holtby</div>
+      <div class="base-sub">Norvale · Principal fast jet station · Home of the Liberators</div>
+    </div>
+    <span class="base-type type-super">Super base</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 1 Sqn</span>
+      <span class="sqn-name">The Liberators <span class="badge-elite">Elite</span></span>
+      <span class="sqn-aircraft">F-35A</span>
+      <span class="sqn-role">Strike · Great War liberation campaign</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 7 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Gripen E</span>
+      <span class="sqn-role">Air defence</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 9 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Gripen E</span>
+      <span class="sqn-role">Air defence</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 18 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Chinook</span>
+      <span class="sqn-role">Heavy lift · Army support</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 28 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Merlin</span>
+      <span class="sqn-role">Medium lift · Army support</span>
+    </div>
+  </div>
+</div>
+
+<div class="base-card single">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Askham</div>
+      <div class="base-sub">Norvale uplands · Single squadron station</div>
+    </div>
+    <span class="base-type type-single">Single sqn</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 43 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Gripen E</span>
+      <span class="sqn-role">Air defence</span>
+    </div>
+  </div>
+</div>
+
+<div class="province-header">Crown District</div>
+
+<div class="base-card super">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Diss</div>
+      <div class="base-sub">Crown District · Transport and tanker hub · Capital defence · Ceremonial base</div>
+    </div>
+    <span class="base-type type-super">Super base</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 56 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Gripen E</span>
+      <span class="sqn-role">Capital air defence</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 24 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">C-17 Globemaster</span>
+      <span class="sqn-role">Strategic airlift</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 30 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">A400M Atlas</span>
+      <span class="sqn-role">Tactical airlift</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 32 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">A330 MRTT · Bell 222B · S-76</span>
+      <span class="sqn-role">Tanker · VIP · Royal flight</span>
+    </div>
+  </div>
+</div>
+
+<div class="province-header">Souni</div>
+
+<div class="base-card hq">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF North Luffenham</div>
+      <div class="base-sub">Near Haldern · RYAF Headquarters · No flying squadrons</div>
+    </div>
+    <span class="base-type type-hq">HQ</span>
+  </div>
+  <div class="hq-note">Royal Yorkshire Air Force Headquarters. Command, operations, planning, intelligence and administration. Home of the Chief of the Air Staff and the RYAF senior command structure.</div>
+</div>
+
+<div class="base-card medium">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Haldern</div>
+      <div class="base-sub">Haldern, Souni · Principal rotary station · Central location</div>
+    </div>
+    <span class="base-type type-medium">Medium base</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 27 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Chinook</span>
+      <span class="sqn-role">Heavy lift</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 35 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Merlin</span>
+      <span class="sqn-role">Medium lift</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 36 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">AW101</span>
+      <span class="sqn-role">SOF support · SAR</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 60 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">AW101</span>
+      <span class="sqn-role">Search and rescue</span>
+    </div>
+  </div>
+</div>
+
+<div class="base-card medium">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Linton</div>
+      <div class="base-sub">Souni · Specialist training · Helicopter and multi engine pipeline</div>
+    </div>
+    <span class="base-type type-medium">Training base</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 15 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Leonardo AW109</span>
+      <span class="sqn-role">Helicopter flying training</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 45 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">King Air B200</span>
+      <span class="sqn-role">Multi engine training</span>
+    </div>
+  </div>
+</div>
+
+<div class="base-card single">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Dalwick</div>
+      <div class="base-sub">Dalwick, Souni · Single squadron air defence station</div>
+    </div>
+    <span class="base-type type-single">Single sqn</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 23 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Gripen E</span>
+      <span class="sqn-role">Air defence</span>
+    </div>
+  </div>
+</div>
+
+<div class="province-header">Rutland</div>
+
+<div class="base-card medium">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Goathland</div>
+      <div class="base-sub">Rutland · Fast jet station · Home of Minden Squadron</div>
+    </div>
+    <span class="base-type type-medium">Medium base</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 11 Sqn</span>
+      <span class="sqn-name">Minden Squadron <span class="badge-elite">Elite</span></span>
+      <span class="sqn-aircraft">F-35A</span>
+      <span class="sqn-role">Strike · Battle of Minden</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 17 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Gripen E</span>
+      <span class="sqn-role">Air defence</span>
+    </div>
+  </div>
+</div>
+
+<div class="base-card medium">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Kirby Heath</div>
+      <div class="base-sub">Near Kirby, Rutland · Principal flying training station · Every RYAF pilot passes through</div>
+    </div>
+    <span class="base-type type-medium">Training base</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 4 FTS</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">PC-21</span>
+      <span class="sqn-role">Basic flying training</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 6 FTS</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">PC-21</span>
+      <span class="sqn-role">Basic flying training</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 22 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">T-7 Kestrel</span>
+      <span class="sqn-role">Advanced training · LIFT</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 25 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">T-7 Kestrel</span>
+      <span class="sqn-role">Advanced training · LIFT</span>
+    </div>
+  </div>
+</div>
+
+<div class="province-header">Ecuavale</div>
+
+<div class="base-card medium">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Soller</div>
+      <div class="base-sub">Ecuavale · Mixed fast jet station · F-35 and Gripen</div>
+    </div>
+    <span class="base-type type-medium">Medium base</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 2 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">F-35A</span>
+      <span class="sqn-role">Strike · Senior F-35A squadron</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 41 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Gripen E</span>
+      <span class="sqn-role">Air defence</span>
+    </div>
+  </div>
+</div>
+
+<div class="base-card medium">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Machala</div>
+      <div class="base-sub">Ecuavale · Strategic ISR station · Deliberately unobtrusive</div>
+    </div>
+    <span class="base-type type-medium">Medium base</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 51 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">RC-135W Rivet Joint</span>
+      <span class="sqn-role">SIGINT collection</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 54 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Saab GlobalEye</span>
+      <span class="sqn-role">Multi-role surveillance</span>
+    </div>
+    <div class="sqn-row">
+      <span class="sqn-num">No. 57 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">RQ-4 Global Hawk · MQ-9B SkyGuardian</span>
+      <span class="sqn-role">Strategic ISR · MALE UAS</span>
+    </div>
+  </div>
+</div>
+
+<div class="base-card single">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Fornalutx</div>
+      <div class="base-sub">Fornalutx, Ecuavale · Tactical airlift single squadron</div>
+    </div>
+    <span class="base-type type-single">Single sqn</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 33 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">A400M Atlas</span>
+      <span class="sqn-role">Tactical airlift</span>
+    </div>
+  </div>
+</div>
+
+<div class="base-card single">
+  <div class="base-header">
+    <div>
+      <div class="base-name">RYAF Arrecife</div>
+      <div class="base-sub">Ecuavale · Single Gripen air defence station</div>
+    </div>
+    <span class="base-type type-single">Single sqn</span>
+  </div>
+  <div class="squadrons">
+    <div class="sqn-row">
+      <span class="sqn-num">No. 29 Sqn</span>
+      <span class="sqn-name"></span>
+      <span class="sqn-aircraft">Gripen E</span>
+      <span class="sqn-role">Air defence</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="inventory-section">
+  <div class="province-header">Full aircraft inventory</div>
+  <div class="inv-grid">
+    <div class="inv-card"><div><div class="inv-type">Gripen E</div><div class="inv-role">Primary fighter</div></div><div><div class="inv-qty">140</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">F-35A</div><div class="inv-role">Land-based strike/stealth</div></div><div><div class="inv-qty">50</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">F-35B</div><div class="inv-role">Carrier STOVL</div></div><div><div class="inv-qty">30</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">F-35C</div><div class="inv-role">Carrier CATOBAR</div></div><div><div class="inv-qty">20</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">T-7 Kestrel</div><div class="inv-role">Advanced trainer / LIFT</div></div><div><div class="inv-qty">28</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">PC-21</div><div class="inv-role">Basic flying trainer</div></div><div><div class="inv-qty">40</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">C-17 Globemaster</div><div class="inv-role">Strategic airlift</div></div><div><div class="inv-qty">6</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">A400M Atlas</div><div class="inv-role">Tactical airlift</div></div><div><div class="inv-qty">12</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">A330 MRTT</div><div class="inv-role">Tanker / strategic transport</div></div><div><div class="inv-qty">6</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">P-8 Poseidon</div><div class="inv-role">Maritime patrol</div></div><div><div class="inv-qty">8</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">E-7A Wedgetail</div><div class="inv-role">Airborne early warning</div></div><div><div class="inv-qty">4</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">RC-135W Rivet Joint</div><div class="inv-role">SIGINT</div></div><div><div class="inv-qty">3</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">Saab GlobalEye</div><div class="inv-role">Multi-role surveillance</div></div><div><div class="inv-qty">2</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">MQ-9B SkyGuardian</div><div class="inv-role">MALE ISR / strike UAS</div></div><div><div class="inv-qty">20</div><div class="inv-unit">systems</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">RQ-4 Global Hawk</div><div class="inv-role">Strategic HALE ISR</div></div><div><div class="inv-qty">2</div><div class="inv-unit">systems</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">Hermes 900</div><div class="inv-role">Tactical UAS</div></div><div><div class="inv-qty">20</div><div class="inv-unit">systems</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">Chinook</div><div class="inv-role">Heavy lift helicopter</div></div><div><div class="inv-qty">30</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">Merlin</div><div class="inv-role">Medium lift helicopter</div></div><div><div class="inv-qty">24</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">AW101</div><div class="inv-role">Medium lift / SOF / SAR</div></div><div><div class="inv-qty">20</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">Leonardo AW109</div><div class="inv-role">Helicopter training</div></div><div><div class="inv-qty">18</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">King Air B200</div><div class="inv-role">Multi engine training</div></div><div><div class="inv-qty">12</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">Bell 222B</div><div class="inv-role">VIP / royal duties</div></div><div><div class="inv-qty">2</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">Sikorsky S-76</div><div class="inv-role">VIP / executive transport</div></div><div><div class="inv-qty">2</div><div class="inv-unit">aircraft</div></div></div>
+    <div class="inv-card"><div><div class="inv-type">VPS Talon</div><div class="inv-role">Loitering munition · Domestic</div></div><div><div class="inv-qty">200+</div><div class="inv-unit">stock</div></div></div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+<p style="font-size:11px;color:var(--color-text-tertiary);text-align:center;padding-bottom:8px">Royal Yorkshire Air Force · RYAF HQ North Luffenham · Arte et Marte · Founded 1930</p>
+
+</body>
+</html>

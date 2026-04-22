@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Yorkshire Navy — Order of Battle</title>
+<style>
+  :root {
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f1efe8;
+    --color-background-tertiary: #e8e6de;
+    --color-text-primary: #1a1a18;
+    --color-text-secondary: #5f5e5a;
+    --color-text-tertiary: #888780;
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --color-border-primary: rgba(0,0,0,0.32);
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --font-sans: system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-background-primary: #1e1e1c;
+      --color-background-secondary: #2c2c2a;
+      --color-background-tertiary: #141412;
+      --color-text-primary: #e8e6de;
+      --color-text-secondary: #9c9a92;
+      --color-text-tertiary: #6a6864;
+      --color-border-tertiary: rgba(255,255,255,0.1);
+      --color-border-secondary: rgba(255,255,255,0.2);
+      --color-border-primary: rgba(255,255,255,0.3);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); background: var(--color-background-tertiary); color: var(--color-text-primary); padding: 24px 16px; min-height: 100vh; }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 2px; }
+  .subtitle { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 6px; }
+  .motto { font-size: 11px; color: var(--color-text-tertiary); font-style: italic; margin-bottom: 20px; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; margin-bottom: 20px; }
+  .stat-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; text-align: center; }
+  .stat-val { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
+  .stat-lbl { font-size: 10px; color: var(--color-text-secondary); margin-top: 2px; }
+  .section-header { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); letter-spacing: 1px; text-transform: uppercase; margin: 18px 0 8px; padding-left: 2px; border-bottom: 0.5px solid var(--color-border-tertiary); padding-bottom: 4px; }
+  .base-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; margin-bottom: 10px; }
+  .base-card.main { border-left: 3px solid #185fa5; }
+  .base-card.sub { border-left: 3px solid #0f6e56; }
+  .base-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+  .base-name { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+  .base-sub { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+  .base-type { font-size: 9px; padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+  .type-main { background: #e6f1fb; color: #0c447c; }
+  .type-sub { background: #e1f5ee; color: #085041; }
+  .type-nuclear { background: #fcebeb; color: #791f1f; }
+  .fleet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .fleet-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 12px 14px; }
+  .fleet-card.flagship { border-color: #ba7517; border-width: 1px; }
+  .fleet-card.nuclear { border-color: #a32d2d; border-width: 1px; }
+  .fleet-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .fleet-class { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+  .fleet-role { font-size: 9px; padding: 2px 7px; border-radius: 4px; }
+  .role-carrier { background: #faeeda; color: #633806; }
+  .role-destroyer { background: #e6f1fb; color: #0c447c; }
+  .role-frigate { background: #e1f5ee; color: #085041; }
+  .role-sub { background: #fcebeb; color: #791f1f; }
+  .role-support { background: var(--color-background-secondary); color: var(--color-text-secondary); }
+  .role-mcm { background: #eeedfe; color: #3c3489; }
+  .role-opv { background: #eaf3de; color: #27500a; }
+  .role-amphibious { background: #faeeda; color: #633806; }
+  .role-survey { background: #e1f5ee; color: #085041; }
+  .ship-list { display: flex; flex-direction: column; gap: 3px; }
+  .ship-item { font-size: 11px; color: var(--color-text-secondary); padding: 3px 8px; background: var(--color-background-secondary); border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
+  .ship-name { font-weight: 500; color: var(--color-text-primary); }
+  .ship-note { font-size: 10px; color: var(--color-text-tertiary); }
+  .badge { font-size: 9px; padding: 1px 5px; border-radius: 3px; }
+  .badge-flagship { background: #faeeda; color: #633806; }
+  .badge-casd { background: #fcebeb; color: #791f1f; }
+  .badge-joint { background: #e1f5ee; color: #085041; }
+  .aviation-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-bottom: 16px; }
+  .av-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; }
+  .av-type { font-size: 12px; font-weight: 500; color: var(--color-text-primary); }
+  .av-role { font-size: 10px; color: var(--color-text-secondary); margin-top: 2px; }
+  .av-qty { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+  .av-unit { font-size: 10px; color: var(--color-text-tertiary); }
+  .section-divider { height: 0.5px; background: var(--color-border-tertiary); margin: 20px 0; }
+  @media (max-width: 600px) { .fleet-grid { grid-template-columns: 1fr; } .stats-row { grid-template-columns: repeat(3, 1fr); } }
+</style>
+</head>
+<body>
+
+<h1>Royal Yorkshire Navy</h1>
+<p class="subtitle">Her Yorkish Majesty's Naval Service — Order of Battle</p>
+<p class="motto">Blue water navy · Continuous At-Sea Deterrence · Arte et Marte</p>
+
+<div class="stats-row">
+  <div class="stat-card"><div class="stat-val">51</div><div class="stat-lbl">Vessels</div></div>
+  <div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Carriers</div></div>
+  <div class="stat-card"><div class="stat-val">16</div><div class="stat-lbl">Escorts</div></div>
+  <div class="stat-card"><div class="stat-val">10</div><div class="stat-lbl">Submarines</div></div>
+  <div class="stat-card"><div class="stat-val">2</div><div class="stat-lbl">Naval bases</div></div>
+  <div class="stat-card"><div class="stat-val">CASD</div><div class="stat-lbl">Active deterrent</div></div>
+</div>
+
+<div class="section-header">Naval Bases</div>
+
+<div class="base-card main">
+  <div class="base-header">
+    <div>
+      <div class="base-name">HYMNB Portmaris <span class="badge badge-joint">Principal base</span></div>
+      <div class="base-sub">Portmaris, Scania · Oslo-inspired fjord city · Home of the surface fleet and carriers · Joint with RYAF Snetterton nearby</div>
+    </div>
+    <span class="base-type type-main">Surface fleet</span>
+  </div>
+  <div class="ship-list">
+    <div class="ship-item"><span class="ship-name">Carrier Strike Group</span><span class="ship-note">HYMS Resolute, escorts, aviation</span></div>
+    <div class="ship-item"><span class="ship-name">Amphibious Group</span><span class="ship-note">HYMS Restoration, HYMS Liberation</span></div>
+    <div class="ship-item"><span class="ship-name">Surface Escort Force</span><span class="ship-note">Defiant-class destroyers, Grindal-class frigates</span></div>
+    <div class="ship-item"><span class="ship-name">Support & Auxiliary</span><span class="ship-note">Tide class, Fort class, Discovery class</span></div>
+    <div class="ship-item"><span class="ship-name">MCM & Patrol</span><span class="ship-note">Warden class, Watch class</span></div>
+  </div>
+</div>
+
+<div class="base-card sub">
+  <div class="base-header">
+    <div>
+      <div class="base-name">HYMNB Kildare <span class="badge badge-casd">Nuclear</span></div>
+      <div class="base-sub">Northern Scanian coast · Remote deep water inlet · Home of the submarine fleet · Self-contained military community</div>
+    </div>
+    <span class="base-type type-nuclear">Submarine base</span>
+  </div>
+  <div class="ship-list">
+    <div class="ship-item"><span class="ship-name">Sovereignty-class SSBN</span><span class="ship-note">CASD rotation — one boat always on patrol</span></div>
+    <div class="ship-item"><span class="ship-name">Kraken-class SSN</span><span class="ship-note">Nuclear attack submarines</span></div>
+  </div>
+</div>
+
+<div class="section-header">Carrier & Amphibious Forces</div>
+<div class="fleet-grid">
+
+  <div class="fleet-card flagship">
+    <div class="fleet-top">
+      <span class="fleet-class">Carrier Strike Group</span>
+      <span class="fleet-role role-carrier">Carriers</span>
+    </div>
+    <div class="ship-list">
+      <div class="ship-item"><span class="ship-name">HYMS Resolute</span><span class="badge badge-flagship">Fleet flagship · CATOBAR</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Steadfast</span><span class="ship-note">STOVL light carrier</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Fortitude</span><span class="ship-note">STOVL light carrier</span></div>
+    </div>
+  </div>
+
+  <div class="fleet-card">
+    <div class="fleet-top">
+      <span class="fleet-class">Bastion class</span>
+      <span class="fleet-role role-amphibious">Amphibious LHD</span>
+    </div>
+    <div class="ship-list">
+      <div class="ship-item"><span class="ship-name">HYMS Restoration</span><span class="ship-note">Mistral equivalent</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Liberation</span><span class="ship-note">Mistral equivalent</span></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-header">Surface Escorts</div>
+<div class="fleet-grid">
+
+  <div class="fleet-card">
+    <div class="fleet-top">
+      <span class="fleet-class">Defiant class</span>
+      <span class="fleet-role role-destroyer">Destroyer · 6 ships</span>
+    </div>
+    <div class="ship-list">
+      <div class="ship-item"><span class="ship-name">HYMS Defiant</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Norvale</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Rutland</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Souni</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Scania</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Ecuavale</span></div>
+    </div>
+  </div>
+
+  <div class="fleet-card">
+    <div class="fleet-top">
+      <span class="fleet-class">Grindal class</span>
+      <span class="fleet-role role-frigate">ASW Frigate · 8 ships</span>
+    </div>
+    <div class="ship-list">
+      <div class="ship-item"><span class="ship-name">HYMS Grindal</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Norin</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Ruthe</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Souna</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Scarn</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Ecua</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Fellwater</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Ironrun</span></div>
+    </div>
+  </div>
+
+  <div class="fleet-card">
+    <div class="fleet-top">
+      <span class="fleet-class">Kirby class</span>
+      <span class="fleet-role role-frigate">GP Frigate · 2 ships</span>
+    </div>
+    <div class="ship-list">
+      <div class="ship-item"><span class="ship-name">HYMS Kirby</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Valemarket</span></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-header">Submarine Fleet</div>
+<div class="fleet-grid">
+
+  <div class="fleet-card nuclear">
+    <div class="fleet-top">
+      <span class="fleet-class">Sovereignty class</span>
+      <span class="fleet-role role-sub">SSBN · 4 boats · CASD</span>
+    </div>
+    <div class="ship-list">
+      <div class="ship-item"><span class="ship-name">HYMS Sovereignty</span><span class="badge badge-casd">CASD</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Constitution</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Continuity</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Dominion</span></div>
+    </div>
+  </div>
+
+  <div class="fleet-card">
+    <div class="fleet-top">
+      <span class="fleet-class">Kraken class</span>
+      <span class="fleet-role role-sub">SSN · 6 boats</span>
+    </div>
+    <div class="ship-list">
+      <div class="ship-item"><span class="ship-name">HYMS Kraken</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Fenrir</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Griffin</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Leviathan</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Drake</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Wyrm</span></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-header">Support & Auxiliary Vessels</div>
+<div class="fleet-grid">
+
+  <div class="fleet-card">
+    <div class="fleet-top">
+      <span class="fleet-class">Tide class</span>
+      <span class="fleet-role role-support">Fleet tanker · 2 ships</span>
+    </div>
+    <div class="ship-list">
+      <div class="ship-item"><span class="ship-name">HYMS Endurance</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Persistence</span></div>
+    </div>
+  </div>
+
+  <div class="fleet-card">
+    <div class="fleet-top">
+      <span class="fleet-class">Fort class</span>
+      <span class="fleet-role role-support">Fleet replenishment · 2 ships</span>
+    </div>
+    <div class="ship-list">
+      <div class="ship-item"><span class="ship-name">HYMS Resolve</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Abundance</span></div>
+    </div>
+  </div>
+
+  <div class="fleet-card">
+    <div class="fleet-top">
+      <span class="fleet-class">Discovery class</span>
+      <span class="fleet-role role-survey">Hydrographic survey · 2 ships</span>
+    </div>
+    <div class="ship-list">
+      <div class="ship-item"><span class="ship-name">HYMS Compass</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Meridian</span></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-header">Mine Countermeasures & Patrol</div>
+<div class="fleet-grid">
+
+  <div class="fleet-card">
+    <div class="fleet-top">
+      <span class="fleet-class">Warden class</span>
+      <span class="fleet-role role-mcm">MCM · 8 vessels</span>
+    </div>
+    <div class="ship-list">
+      <div class="ship-item"><span class="ship-name">HYMS Warden</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Sentinel</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Keeper</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Watchman</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Guardian</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Protector</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Constable</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Marshal</span></div>
+    </div>
+  </div>
+
+  <div class="fleet-card">
+    <div class="fleet-top">
+      <span class="fleet-class">Watch class</span>
+      <span class="fleet-role role-opv">OPV · 6 vessels</span>
+    </div>
+    <div class="ship-list">
+      <div class="ship-item"><span class="ship-name">HYMS Storrs</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Glass</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Fox</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Waite</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Kevern</span></div>
+      <div class="ship-item"><span class="ship-name">HYMS Leigh-Smith</span></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-header">Naval Aviation</div>
+<div class="aviation-grid">
+  <div class="av-card"><div><div class="av-type">F-35B</div><div class="av-role">Carrier STOVL · RYAF No.14 & 19 Sqn</div></div><div><div class="av-qty">30</div><div class="av-unit">aircraft</div></div></div>
+  <div class="av-card"><div><div class="av-type">F-35C</div><div class="av-role">Carrier CATOBAR · RYAF No.3 Sqn</div></div><div><div class="av-qty">20</div><div class="av-unit">aircraft</div></div></div>
+  <div class="av-card"><div><div class="av-type">MH-90</div><div class="av-role">Shipborne ASW/SAR/utility</div></div><div><div class="av-qty">30</div><div class="av-unit">aircraft</div></div></div>
+  <div class="av-card"><div><div class="av-type">Schiebel S-100</div><div class="av-role">Ship-launched naval UAS</div></div><div><div class="av-qty">20</div><div class="av-unit">systems</div></div></div>
+  <div class="av-card"><div><div class="av-type">P-8 Poseidon</div><div class="av-role">Maritime patrol · RYAF No.5 Sqn</div></div><div><div class="av-qty">8</div><div class="av-unit">aircraft</div></div></div>
+  <div class="av-card"><div><div class="av-type">E-7A Wedgetail</div><div class="av-role">Airborne early warning · RYAF No.8 Sqn</div></div><div><div class="av-qty">4</div><div class="av-unit">aircraft</div></div></div>
+</div>
+
+<div class="section-divider"></div>
+<p style="font-size:11px;color:var(--color-text-tertiary);text-align:center;padding-bottom:8px">Royal Yorkshire Navy · HYMNB Portmaris · Her Yorkish Majesty's Naval Service · Arte et Marte</p>
+
+</body>
+</html>
